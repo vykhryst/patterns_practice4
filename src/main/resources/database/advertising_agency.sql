@@ -36,11 +36,11 @@ DROP TABLE IF EXISTS `advertising_agency`.`client`;
 CREATE TABLE IF NOT EXISTS `advertising_agency`.`client`
 (
     `id`           INT          NOT NULL AUTO_INCREMENT,
-    `username`     VARCHAR(45)  NULL DEFAULT NULL,
+    `username`     VARCHAR(45)  NOT NULL,
     `firstname`    VARCHAR(32)  NOT NULL,
     `lastname`     VARCHAR(150) NOT NULL,
     `phone_number` VARCHAR(10)  NOT NULL,
-    `email`        VARCHAR(255) NULL DEFAULT NULL,
+    `email`        VARCHAR(255) NOT NULL,
     `password`     VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `phone_number_UNIQUE` (`phone_number` ASC) VISIBLE
@@ -81,20 +81,20 @@ DROP TABLE IF EXISTS `advertising_agency`.`advertising`;
 
 CREATE TABLE IF NOT EXISTS `advertising_agency`.`advertising`
 (
-    `id`          INT                    NOT NULL AUTO_INCREMENT,
-    `category_id` INT                    NOT NULL,
-    `name`        VARCHAR(255)           NOT NULL,
-    `measurement` VARCHAR(255)           NULL DEFAULT NULL,
-    `unit_price`  DECIMAL(7, 2) UNSIGNED NOT NULL,
-    `description` VARCHAR(255)           NULL DEFAULT NULL,
-    `updated_at`  TIMESTAMP              NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `id`          INT           NOT NULL AUTO_INCREMENT,
+    `category_id` INT           NOT NULL,
+    `name`        VARCHAR(255)  NOT NULL,
+    `measurement` VARCHAR(255)  NOT NULL,
+    `unit_price`  DECIMAL(7, 2) NOT NULL,
+    `description` VARCHAR(255)  NULL     DEFAULT NULL,
+    `updated_at`  TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX `fk_advertising_category_idx` (`category_id` ASC) VISIBLE,
     CONSTRAINT `fk_advertising_category`
         FOREIGN KEY (`category_id`)
             REFERENCES `advertising_agency`.`category` (`id`)
             ON DELETE CASCADE
-            ON UPDATE CASCADE
+            ON UPDATE RESTRICT
 );
 
 INSERT INTO `advertising` (`category_id`, `name`, `measurement`, `unit_price`, `description`)
@@ -131,24 +131,33 @@ DROP TABLE IF EXISTS `advertising_agency`.`program`;
 
 CREATE TABLE IF NOT EXISTS `advertising_agency`.`program`
 (
-    `id`        INT NOT NULL AUTO_INCREMENT,
-    `client_id` INT NOT NULL,
+    `id`             INT          NOT NULL AUTO_INCREMENT,
+    `client_id`      INT          NOT NULL,
+    `campaign_title` VARCHAR(100) NOT NULL,
+    `description`    VARCHAR(255) NULL     DEFAULT NULL,
+    `created_at`     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     INDEX `fk_program_client_idx` (`client_id` ASC) VISIBLE,
     CONSTRAINT `fk_program_client`
         FOREIGN KEY (`client_id`)
             REFERENCES `advertising_agency`.`client` (`id`)
             ON DELETE CASCADE
-            ON UPDATE CASCADE
+            ON UPDATE RESTRICT
 );
 
-INSERT INTO `program` (`client_id`)
-VALUES (1),
-       (2),
-       (3),
-       (4),
-       (5),
-       (6);
+INSERT INTO `program` (`client_id`, `campaign_title`, `description`)
+VALUES (1, 'Summer Campaign', 'Summer advertising campaign'),
+       (2, 'Winter Campaign', 'Winter advertising campaign'),
+       (3, 'Spring Campaign', 'Spring advertising campaign'),
+       (5, 'Christmas Campaign', 'Christmas advertising campaign'),
+       (6, 'New Year Campaign', 'New Year advertising campaign'),
+       (7, 'Easter Campaign', 'Easter advertising campaign'),
+       (8, 'Valentine''s Day Campaign', 'Valentine''s Day advertising campaign'),
+       (9, 'Halloween Campaign', 'Halloween advertising campaign'),
+       (14, 'Black Friday Campaign', 'Black Friday advertising campaign'),
+       (15, 'Cyber Monday Campaign', 'Cyber Monday advertising campaign'),
+       (16, 'Back to School Campaign', 'Back to School advertising campaign'),
+       (23, 'Earth Day Campaign', 'Earth Day advertising campaign');
 
 -- -----------------------------------------------------
 -- Table `advertising_agency`.`program_has_advertising`
@@ -167,12 +176,12 @@ CREATE TABLE IF NOT EXISTS `advertising_agency`.`program_advertising`
         FOREIGN KEY (`program_id`)
             REFERENCES `advertising_agency`.`program` (`id`)
             ON DELETE CASCADE
-            ON UPDATE CASCADE,
+            ON UPDATE RESTRICT,
     CONSTRAINT `fk_program_advertising_advertising`
         FOREIGN KEY (`advertising_id`)
             REFERENCES `advertising_agency`.`advertising` (`id`)
             ON DELETE CASCADE
-            ON UPDATE CASCADE
+            ON UPDATE RESTRICT
 );
 
 INSERT INTO `program_advertising` (`program_id`, `advertising_id`, `quantity`)

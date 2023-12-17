@@ -3,7 +3,6 @@ package org.vykhryst.dao.mysqlEntityDao;
 
 import org.vykhryst.util.DBException;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;

@@ -1,16 +1,18 @@
 package org.vykhryst.dao.mysqlEntityDao;
 
 
-import org.vykhryst.util.DBException;
 import org.vykhryst.dao.entityDao.ClientDAO;
 import org.vykhryst.entity.Client;
+import org.vykhryst.observer.EventNotifier;
+import org.vykhryst.observer.listeners.EntityEventListener;
+import org.vykhryst.util.DBException;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MySqlClientDAO implements ClientDAO {
+public class MySqlClientDAO extends EventNotifier<Client> implements ClientDAO {
 
     private static final String SELECT_ALL_CLIENTS = "SELECT * FROM client";
     private static final String SELECT_CLIENT_BY_ID = "SELECT * FROM client WHERE id = ?";
@@ -40,7 +42,7 @@ public class MySqlClientDAO implements ClientDAO {
     }
 
     private Client mapClient(ResultSet rs) throws SQLException {
-        return new Client.Builder(rs.getInt("id"))
+        return new Client.Builder().id(rs.getInt("id"))
                 .username(rs.getString("username"))
                 .firstname(rs.getString("firstname"))
                 .lastname(rs.getString("lastname"))
@@ -74,6 +76,7 @@ public class MySqlClientDAO implements ClientDAO {
                     client.setId(keys.getLong(1));
                 }
             }
+            notifyEntityAdded(client);
             return client.getId();
         } catch (SQLException e) {
             throw new DBException("Can't insert client", e);
@@ -95,6 +98,7 @@ public class MySqlClientDAO implements ClientDAO {
              PreparedStatement stmt = conn.prepareStatement(UPDATE_CLIENT)) {
             setClientStatement(client, stmt);
             stmt.setLong(7, client.getId());
+            notifyEntityUpdated(client);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DBException("Can't update client", e);
@@ -107,11 +111,13 @@ public class MySqlClientDAO implements ClientDAO {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(DELETE_CLIENT_BY_ID)) {
             stmt.setLong(1, id);
+            notifyEntityDeleted(id);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DBException("Can't delete client", e);
         }
     }
+
 
     @Override
     public Optional<Client> findByUsername(String username) throws DBException {
@@ -123,6 +129,24 @@ public class MySqlClientDAO implements ClientDAO {
             }
         } catch (SQLException e) {
             throw new DBException("Can't get client by username", e);
+        }
+    }
+
+    @Override
+    public long deleteClientAndPrograms(long id) throws DBException {
+        long result = -1; // Default failure value
+        try (Connection conn = connectionManager.getConnection();
+             CallableStatement stmt = conn.prepareCall("{call delete_client_and_programs(?)}")) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+            // Retrieving the result from the stored procedure
+            ResultSet rs = stmt.getResultSet();
+            if (rs != null && rs.next()) {
+                result = rs.getLong("Result");
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new DBException("Can't delete client and programs", e);
         }
     }
 }

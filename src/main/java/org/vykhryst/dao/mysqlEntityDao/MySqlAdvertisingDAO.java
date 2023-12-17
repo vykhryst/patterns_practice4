@@ -1,26 +1,24 @@
 package org.vykhryst.dao.mysqlEntityDao;
 
 
-import org.vykhryst.util.DBException;
 import org.vykhryst.dao.entityDao.AdvertisingDAO;
 import org.vykhryst.entity.Advertising;
 import org.vykhryst.entity.Category;
+import org.vykhryst.observer.EventNotifier;
+import org.vykhryst.util.DBException;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MySqlAdvertisingDAO implements AdvertisingDAO {
+public class MySqlAdvertisingDAO extends EventNotifier<Advertising> implements AdvertisingDAO  {
     private static final String SELECT_ALL_AD = "SELECT a.id, c.id, c.name, a.name, a.measurement, a.unit_price, a.description, a.updated_at FROM advertising a LEFT JOIN category c ON a.category_id = c.id";
     private static final String SELECT_AD_BY_ID = "SELECT a.id, c.id, c.name, a.name, a.measurement, a.unit_price, a.description, a.updated_at  FROM advertising a LEFT JOIN category c ON a.category_id = c.id WHERE a.id = ?;";
     private static final String SELECT_AD_BY_NAME = "SELECT a.id, c.id, c.name, a.name, a.measurement, a.unit_price, a.description, a.updated_at  FROM advertising a LEFT JOIN category c ON a.category_id = c.id WHERE a.name = ?;";
     private static final String INSERT_AD = "INSERT INTO advertising (category_id, name, measurement, unit_price, description) VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE_AD = "UPDATE advertising SET category_id = ?, name = ?, measurement = ?, unit_price = ?, description = ? WHERE id = ?";
     private static final String DELETE_AD_BY_ID = "DELETE FROM advertising WHERE id = ?";
-    private static final String SELECT_ALL_CATEGORIES = "SELECT id, name FROM category";
-    private static final String INSERT_CATEGORY = "INSERT INTO category (name) VALUES (?)";
-    private static final String DELETE_CATEGORY_BY_ID = "DELETE FROM category WHERE id = ?";
     private final ConnectionManager connectionManager;
 
     public MySqlAdvertisingDAO() {
@@ -81,6 +79,7 @@ public class MySqlAdvertisingDAO implements AdvertisingDAO {
             if (programKeys.next()) {
                 advertising.setId(programKeys.getInt(1));
             }
+            notifyEntityAdded(advertising);
             return advertising.getId();
         } catch (SQLException e) {
             throw new DBException("Can't insert advertising", e);
@@ -101,6 +100,7 @@ public class MySqlAdvertisingDAO implements AdvertisingDAO {
              PreparedStatement stmt = conn.prepareStatement(UPDATE_AD)) {
             setStatement(advertising, stmt);
             stmt.setLong(6, advertising.getId());
+            notifyEntityUpdated(advertising);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DBException("Can't update advertising", e);
@@ -112,6 +112,7 @@ public class MySqlAdvertisingDAO implements AdvertisingDAO {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(DELETE_AD_BY_ID)) {
             stmt.setLong(1, id);
+            notifyEntityDeleted(id);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,45 +120,6 @@ public class MySqlAdvertisingDAO implements AdvertisingDAO {
         }
     }
 
-    @Override
-    public List<Category> findAllCategories() throws SQLException {
-        try (Connection conn = connectionManager.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(SELECT_ALL_CATEGORIES)) {
-            List<Category> result = new ArrayList<>();
-            while (rs.next()) {
-                Category category = new Category();
-                category.setId(rs.getInt(1));
-                category.setName(rs.getString(2));
-                result.add(category);
-            }
-            return result;
-        } catch (SQLException e) {
-            throw new DBException("Can't get all categories", e);
-        }
-    }
-
-    @Override
-    public boolean saveCategory(Category category) throws SQLException {
-        try (Connection conn = connectionManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(INSERT_CATEGORY)) {
-            stmt.setString(1, category.getName());
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new DBException("Can't insert category", e);
-        }
-    }
-
-    @Override
-    public boolean deleteCategory(long id) throws SQLException {
-        try (Connection conn = connectionManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(DELETE_CATEGORY_BY_ID)) {
-            stmt.setLong(1, id);
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new DBException("Can't delete category", e);
-        }
-    }
 
     @Override
     public Optional<Advertising> findByName(String name) throws SQLException {

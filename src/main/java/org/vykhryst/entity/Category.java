@@ -16,4 +16,8 @@ public class Category {
     public Category(long id) {
         this.id = id;
     }
+
+    public Category(String name) {
+        this.name = name;
+    }
 }

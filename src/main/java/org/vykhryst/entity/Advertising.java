@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -34,6 +33,7 @@ public class Advertising {
     }
 
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Builder {
         private long id;
         private Category category;
@@ -49,10 +49,6 @@ public class Advertising {
             this.measurement = measurement;
             this.unitPrice = unitPrice;
             this.description = description;
-        }
-
-        public Builder(long id) {
-            this.id = id;
         }
 
         public Builder id(long id) {

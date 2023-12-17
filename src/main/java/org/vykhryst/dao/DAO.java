@@ -15,4 +15,7 @@ public interface DAO<T> {
     boolean update(T entity) throws SQLException;
 
     boolean delete(long id) throws SQLException;
+
+//    void subscribe(EntityEventListener<T> listener, EventType... eventTypes);
+//    void unsubscribe(EntityEventListener<T> listener);
 }

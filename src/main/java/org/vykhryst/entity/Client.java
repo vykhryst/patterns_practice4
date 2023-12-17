@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Optional;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,9 +35,6 @@ public class Client {
         private String email;
         private String password;
 
-        public Builder(long id){
-            this.id = id;
-        }
 
         public Builder id(long id){
             this.id = id;

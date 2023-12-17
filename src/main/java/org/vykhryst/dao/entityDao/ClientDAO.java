@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface ClientDAO extends DAO<Client> {
     Optional<Client> findByUsername(String username) throws DBException;
+    long deleteClientAndPrograms(long id) throws DBException;
 }
