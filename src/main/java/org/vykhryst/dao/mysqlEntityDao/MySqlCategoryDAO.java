@@ -21,7 +21,7 @@ public class MySqlCategoryDAO extends EventNotifier<Category> implements Categor
     }
 
     @Override
-    public Optional<Category> findById(long id) throws SQLException {
+    public Optional<Category> findById(long id) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SELECT_BY_ID)) {
             stmt.setLong(1, id);
@@ -34,7 +34,7 @@ public class MySqlCategoryDAO extends EventNotifier<Category> implements Categor
     }
 
     @Override
-    public List<Category> findAll() throws SQLException {
+    public List<Category> findAll() {
         try (Connection conn = connectionManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(SELECT_ALL)) {
@@ -57,7 +57,7 @@ public class MySqlCategoryDAO extends EventNotifier<Category> implements Categor
     }
 
     @Override
-    public long save(Category category) throws SQLException {
+    public long save(Category category) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(INSERT_CATEGORY, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, category.getName());
@@ -75,7 +75,7 @@ public class MySqlCategoryDAO extends EventNotifier<Category> implements Categor
     }
 
     @Override
-    public boolean update(Category entity) throws SQLException {
+    public boolean update(Category entity) {
         try(Connection conn = connectionManager.getConnection();
             PreparedStatement stmt = conn.prepareStatement(UPDATE_CATEGORY)) {
             stmt.setString(1, entity.getName());
@@ -89,7 +89,7 @@ public class MySqlCategoryDAO extends EventNotifier<Category> implements Categor
     }
 
     @Override
-    public boolean delete(long id) throws SQLException {
+    public boolean delete(long id) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(DELETE_BY_ID)) {
             stmt.setLong(1, id);

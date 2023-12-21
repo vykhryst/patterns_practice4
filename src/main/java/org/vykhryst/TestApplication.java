@@ -11,6 +11,7 @@ import org.vykhryst.dao.mysqlEntityDao.MySqlCategoryDAO;
 import org.vykhryst.dao.mysqlEntityDao.MySqlClientDAO;
 import org.vykhryst.dao.mysqlEntityDao.MySqlProgramDAO;
 import org.vykhryst.entity.*;
+import org.vykhryst.memento.ClientCaretaker;
 import org.vykhryst.observer.*;
 import org.vykhryst.observer.listeners.*;
 
@@ -22,22 +23,57 @@ import java.util.Optional;
 
 public class TestApplication {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         // Initialize DAO Factory
         DAOFactory daoFactory = MySqlDaoFactory.getInstance();
 
-        CategoryDAO categoryDAO = daoFactory.getCategoryDAO();
-        AdvertisingDAO advertisingDAO = daoFactory.getAdvertisingDAO();
-        ClientDAO clientDAO = daoFactory.getClientDAO();
-        ProgramDAO programDAO = daoFactory.getProgramDAO();
+        MySqlClientDAO clientDAO = (MySqlClientDAO) daoFactory.getClientDAO();
 
-        testCategoryListener((MySqlCategoryDAO) categoryDAO);
+        // THIRD PRACTICE
+        EntityEventListener<Client> clientEventListener = new ClientEventListener();
+        clientDAO.subscribe(clientEventListener);
+
+        Client client = new Client.Builder().username("test_user")
+                .firstname("John")
+                .lastname("Snow")
+                .phoneNumber("1212343490")
+                .email("john@example.com")
+                .password("test_password")
+                .build();
+
+        ClientCaretaker clientCaretaker = new ClientCaretaker();
+        clientCaretaker.save(client, clientDAO);
+
+        System.out.println("\nFirst update");
+        client.setFirstname("FIRST Updated name");
+        clientCaretaker.update(client, clientDAO);
+
+        System.out.println("\nSecond update");
+        client.setFirstname("SECOND Updated name");
+        client.setLastname("SECOND Updated lastname");
+        clientCaretaker.update(client, clientDAO);
+
+        System.out.println("\nFirst undo");
+        clientCaretaker.undo(client, clientDAO);
+
+        System.out.println("\nSecond undo");
+        clientCaretaker.undo(client, clientDAO);
+
+        System.out.println();
+        clientDAO.delete(client.getId());
+
+        System.out.println("\nThird undo");
+        clientCaretaker.undo(client, clientDAO);
+        
+        
+        // SECOND PRACTICE
+        /*testCategoryListener((MySqlCategoryDAO) categoryDAO);
 
         testAdvertisingListener((MySqlAdvertisingDAO) advertisingDAO);
 
         testClientListener((MySqlClientDAO) clientDAO);
 
-        testProgramListener((MySqlAdvertisingDAO) advertisingDAO, (MySqlClientDAO) clientDAO, (MySqlProgramDAO) programDAO);
+        testProgramListener((MySqlAdvertisingDAO) advertisingDAO, (MySqlClientDAO) clientDAO, (MySqlProgramDAO) programDAO);*/
 
         // FIRST PRACTICE
         /*// Test Category
@@ -54,7 +90,7 @@ public class TestApplication {
     }
 
     // SECOND PRACTICE METHODS
-    private static void testProgramListener(MySqlAdvertisingDAO advertisingDAO, MySqlClientDAO clientDAO, MySqlProgramDAO programDAO) throws SQLException {
+    private static void testProgramListener(MySqlAdvertisingDAO advertisingDAO, MySqlClientDAO clientDAO, MySqlProgramDAO programDAO) {
         System.out.println("\n----- Testing Program -----");
         // Program Event Listener
         EntityEventListener<Program> programEventListener = new ProgramEventListener();
@@ -88,7 +124,7 @@ public class TestApplication {
         }
     }
 
-    private static void testClientListener(MySqlClientDAO clientDAO) throws SQLException {
+    private static void testClientListener(MySqlClientDAO clientDAO) {
         // Client Event Listener
         System.out.println("\n----- Testing Client -----");
         EntityEventListener<Client> clientEventListener = new ClientEventListener();
@@ -111,7 +147,7 @@ public class TestApplication {
         }
     }
 
-    private static void testAdvertisingListener(MySqlAdvertisingDAO advertisingDAO) throws SQLException {
+    private static void testAdvertisingListener(MySqlAdvertisingDAO advertisingDAO) {
         //         Advertising Event Listener
         System.out.println("\n----- Testing Advertising -----");
         EntityEventListener<Advertising> advertisingEventListener = new AdvertisingEventListener();
@@ -134,7 +170,7 @@ public class TestApplication {
         }
     }
 
-    private static void testCategoryListener(MySqlCategoryDAO categoryDAO) throws SQLException {
+    private static void testCategoryListener(MySqlCategoryDAO categoryDAO) {
         // Category Event Listener
         System.out.println("\n----- Testing Category -----");
         EntityEventListener<Category> listener1 = new CategoryEventListener();
@@ -160,7 +196,7 @@ public class TestApplication {
     }
 
     // FIRST PRACTICE METHODS
-    private static void testCategory(CategoryDAO categoryDAO) throws SQLException {
+    private static void testCategory(CategoryDAO categoryDAO) {
         System.out.println("----- Testing Category -----");
 
         // Find All Categories
@@ -169,7 +205,7 @@ public class TestApplication {
         System.out.println();
     }
 
-    private static void testAdvertising(AdvertisingDAO advertisingDAO) throws SQLException {
+    private static void testAdvertising(AdvertisingDAO advertisingDAO) {
         System.out.println("----- Testing Advertising -----");
 
         // Add Advertising
@@ -197,7 +233,7 @@ public class TestApplication {
         System.out.println("Found Advertising by ID: " + advertisingDAO.findById(advertising.getId()).orElse(null));
     }
 
-    private static void testClient(ClientDAO clientDAO) throws SQLException {
+    private static void testClient(ClientDAO clientDAO) {
         System.out.println("\n----- Testing Client -----");
 
         // Add Client
@@ -235,7 +271,7 @@ public class TestApplication {
         System.out.println("Found Client by ID: " + clientDAO.findById(client.getId()).orElse(null));
     }
 
-    private static void testProgram(ProgramDAO programDAO) throws SQLException {
+    private static void testProgram(ProgramDAO programDAO) {
         System.out.println("\n----- Testing Program -----");
 
         // Add Program

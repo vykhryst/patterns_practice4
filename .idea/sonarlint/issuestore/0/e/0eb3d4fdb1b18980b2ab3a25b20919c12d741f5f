@@ -1,4 +1,7 @@
 
-v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¸ëµÜ8æ™ œÇ1
-m
-java:S2095„"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÖığÅ8¿š œÇ1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¸ëµÜ8µ×áÌÇ1
+l
+java:S2095z"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÖığÅ8°ØáÌÇ1
+r
+java:S1128
+"PRemove this unused import 'org.vykhryst.observer.listeners.EntityEventListener'.(‹ëÁÓüÿÿÿÿ8ÃöäÌÇ1

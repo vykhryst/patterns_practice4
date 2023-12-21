@@ -27,7 +27,7 @@ public class MySqlAdvertisingDAO extends EventNotifier<Advertising> implements A
 
 
     @Override
-    public List<Advertising> findAll() throws SQLException {
+    public List<Advertising> findAll() {
         try (Connection conn = connectionManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(SELECT_ALL_AD)) {
@@ -57,7 +57,7 @@ public class MySqlAdvertisingDAO extends EventNotifier<Advertising> implements A
 
 
     @Override
-    public Optional<Advertising> findById(long id) throws SQLException {
+    public Optional<Advertising> findById(long id) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SELECT_AD_BY_ID)) {
             stmt.setLong(1, id);
@@ -70,7 +70,7 @@ public class MySqlAdvertisingDAO extends EventNotifier<Advertising> implements A
     }
 
     @Override
-    public long save(Advertising advertising) throws SQLException {
+    public long save(Advertising advertising) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(INSERT_AD, Statement.RETURN_GENERATED_KEYS)) {
             setStatement(advertising, stmt);
@@ -108,7 +108,7 @@ public class MySqlAdvertisingDAO extends EventNotifier<Advertising> implements A
     }
 
     @Override
-    public boolean delete(long id) throws SQLException {
+    public boolean delete(long id) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(DELETE_AD_BY_ID)) {
             stmt.setLong(1, id);
@@ -122,7 +122,7 @@ public class MySqlAdvertisingDAO extends EventNotifier<Advertising> implements A
 
 
     @Override
-    public Optional<Advertising> findByName(String name) throws SQLException {
+    public Optional<Advertising> findByName(String name) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SELECT_AD_BY_NAME)) {
             stmt.setString(1, name);

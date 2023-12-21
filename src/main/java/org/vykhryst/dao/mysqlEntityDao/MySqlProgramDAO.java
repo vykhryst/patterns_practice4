@@ -36,7 +36,7 @@ public class MySqlProgramDAO extends EventNotifier<Program> implements ProgramDA
     }
 
     @Override
-    public List<Program> findAll() throws DBException {
+    public List<Program> findAll() {
         try (Connection conn = connectionManager.getConnection();
              Statement st = conn.createStatement()) {
             ResultSet rs = st.executeQuery(SELECT_ALL_PROGRAMS);
@@ -95,7 +95,7 @@ public class MySqlProgramDAO extends EventNotifier<Program> implements ProgramDA
     }
 
     @Override
-    public Optional<Program> findById(long id) throws DBException {
+    public Optional<Program> findById(long id) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement st = conn.prepareStatement(SELECT_PROGRAM_BY_ID)) {
             st.setLong(1, id);
@@ -113,7 +113,7 @@ public class MySqlProgramDAO extends EventNotifier<Program> implements ProgramDA
     }
 
     @Override
-    public long save(Program program) throws DBException {
+    public long save(Program program) {
         Connection conn = null;
         PreparedStatement st = null;
         try {
@@ -150,7 +150,7 @@ public class MySqlProgramDAO extends EventNotifier<Program> implements ProgramDA
     }
 
     @Override
-    public boolean saveAdvertisingToProgram(long programId, Map<Advertising, Integer> advertising) throws DBException {
+    public boolean saveAdvertisingToProgram(long programId, Map<Advertising, Integer> advertising) {
         Connection conn = null;
         PreparedStatement st = null;
         try {
@@ -178,7 +178,7 @@ public class MySqlProgramDAO extends EventNotifier<Program> implements ProgramDA
     }
 
     @Override
-    public boolean update(Program program) throws DBException {
+    public boolean update(Program program) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement st = conn.prepareStatement(UPDATE_PROGRAM_QUANTITY)) {
             for (Map.Entry<Advertising, Integer> programAdvertising : program.getAdvertising().entrySet()) {
@@ -195,7 +195,7 @@ public class MySqlProgramDAO extends EventNotifier<Program> implements ProgramDA
     }
 
     @Override
-    public boolean delete(long id) throws DBException {
+    public boolean delete(long id) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement st = conn.prepareStatement(DELETE_PROGRAM_BY_ID)) {
             st.setLong(1, id);
@@ -207,7 +207,7 @@ public class MySqlProgramDAO extends EventNotifier<Program> implements ProgramDA
     }
 
     @Override
-    public boolean deleteAdvertisingFromProgram(long programId, long advertisingId) throws DBException {
+    public boolean deleteAdvertisingFromProgram(long programId, long advertisingId) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement st = conn.prepareStatement(DELETE_PROGRAM_ADVERTISING)) {
             st.setLong(1, programId);

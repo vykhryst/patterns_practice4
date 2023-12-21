@@ -1,7 +1,7 @@
 package org.vykhryst.util;
 
 import java.sql.SQLException;
-public class DBException extends SQLException {
+public class DBException extends RuntimeException {
 
     public DBException() {
         super();

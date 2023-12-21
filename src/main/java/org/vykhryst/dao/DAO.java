@@ -6,16 +6,13 @@ import java.util.Optional;
 
 public interface DAO<T> {
 
-    Optional<T> findById(long id) throws SQLException;
+    Optional<T> findById(long id);
 
-    List<T> findAll() throws SQLException;
+    List<T> findAll();
 
-    long save(T entity) throws SQLException;
+    long save(T entity);
 
-    boolean update(T entity) throws SQLException;
+    boolean update(T entity);
 
-    boolean delete(long id) throws SQLException;
-
-//    void subscribe(EntityEventListener<T> listener, EventType... eventTypes);
-//    void unsubscribe(EntityEventListener<T> listener);
+    boolean delete(long id);
 }

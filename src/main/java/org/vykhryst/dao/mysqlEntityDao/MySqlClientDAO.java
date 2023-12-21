@@ -27,7 +27,7 @@ public class MySqlClientDAO extends EventNotifier<Client> implements ClientDAO {
     }
 
     @Override
-    public List<Client> findAll() throws DBException {
+    public List<Client> findAll() {
         try (Connection conn = connectionManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(SELECT_ALL_CLIENTS)) {
@@ -53,7 +53,7 @@ public class MySqlClientDAO extends EventNotifier<Client> implements ClientDAO {
     }
 
     @Override
-    public Optional<Client> findById(long id) throws DBException {
+    public Optional<Client> findById(long id) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SELECT_CLIENT_BY_ID)) {
             stmt.setLong(1, id);
@@ -66,7 +66,7 @@ public class MySqlClientDAO extends EventNotifier<Client> implements ClientDAO {
     }
 
     @Override
-    public long save(Client client) throws DBException {
+    public long save(Client client) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(INSERT_CLIENT, Statement.RETURN_GENERATED_KEYS)) {
             setClientStatement(client, stmt);
@@ -93,7 +93,7 @@ public class MySqlClientDAO extends EventNotifier<Client> implements ClientDAO {
     }
 
     @Override
-    public boolean update(Client client) throws DBException {
+    public boolean update(Client client) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(UPDATE_CLIENT)) {
             setClientStatement(client, stmt);
@@ -107,7 +107,7 @@ public class MySqlClientDAO extends EventNotifier<Client> implements ClientDAO {
     }
 
     @Override
-    public boolean delete(long id) throws DBException {
+    public boolean delete(long id) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(DELETE_CLIENT_BY_ID)) {
             stmt.setLong(1, id);
@@ -120,7 +120,7 @@ public class MySqlClientDAO extends EventNotifier<Client> implements ClientDAO {
 
 
     @Override
-    public Optional<Client> findByUsername(String username) throws DBException {
+    public Optional<Client> findByUsername(String username) {
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SELECT_CLIENT_BY_USERNAME)) {
             stmt.setString(1, username);
@@ -129,24 +129,6 @@ public class MySqlClientDAO extends EventNotifier<Client> implements ClientDAO {
             }
         } catch (SQLException e) {
             throw new DBException("Can't get client by username", e);
-        }
-    }
-
-    @Override
-    public long deleteClientAndPrograms(long id) throws DBException {
-        long result = -1; // Default failure value
-        try (Connection conn = connectionManager.getConnection();
-             CallableStatement stmt = conn.prepareCall("{call delete_client_and_programs(?)}")) {
-            stmt.setLong(1, id);
-            stmt.executeUpdate();
-            // Retrieving the result from the stored procedure
-            ResultSet rs = stmt.getResultSet();
-            if (rs != null && rs.next()) {
-                result = rs.getLong("Result");
-            }
-            return result;
-        } catch (SQLException e) {
-            throw new DBException("Can't delete client and programs", e);
         }
     }
 }

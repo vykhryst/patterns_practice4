@@ -1,44 +1,44 @@
 
 g
-java:S1192\"JDefine a constant instead of duplicating this literal "test_user" 3 times.( ü®õ8–ÿœÇ1
-X	java:S125)"<This block of commented-out lines of code should be removed.(á¿à§8ÚÿœÇ1
-G	java:S1066"+Replace this use of System.out by a logger.(ÚØõ¯8ÛÿœÇ1
-L	java:S106F"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8ŞÿœÇ1
-L	java:S106R"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8àÿœÇ1
-L	java:S106Y"+Replace this use of System.out by a logger.(úÆÛÀùÿÿÿÿ8áÿœÇ1
-L	java:S106p"+Replace this use of System.out by a logger.(Â–ÔÀùÿÿÿÿ8ãÿœÇ1
-H	java:S106‡"+Replace this use of System.out by a logger.(¥ Êº8æÿœÇ1
-M	java:S106˜"+Replace this use of System.out by a logger.(ÎûŒåúÿÿÿÿ8çÿœÇ1
-H	java:S106›"+Replace this use of System.out by a logger.(»Ş“å8çÿœÇ1
-H	java:S106œ"+Replace this use of System.out by a logger.(‡Éû®8èÿœÇ1
-M	java:S106"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8èÿœÇ1
-H	java:S106¡"+Replace this use of System.out by a logger.(Š­Ğî8èÿœÇ1
-M	java:S106§"+Replace this use of System.out by a logger.(İüúÿÿÿÿ8éÿœÇ1
-M	java:S106«"+Replace this use of System.out by a logger.(ÿêİ¸ûÿÿÿÿ8éÿœÇ1
-H	java:S106¯"+Replace this use of System.out by a logger.(Ïêş8êÿœÇ1
-M	java:S106´"+Replace this use of System.out by a logger.(í·ÇØøÿÿÿÿ8êÿœÇ1
-M	java:S106¸"+Replace this use of System.out by a logger.(Åš®ïúÿÿÿÿ8ëÿœÇ1
-G	java:S106¹"+Replace this use of System.out by a logger.(íÁ²8ëÿœÇ1
-M	java:S106½"+Replace this use of System.out by a logger.(úÆÛÀùÿÿÿÿ8ìÿœÇ1
-M	java:S106É"+Replace this use of System.out by a logger.(ñÑ÷öıÿÿÿÿ8ìÿœÇ1
-^	java:S125Ì"<This block of commented-out lines of code should be removed.(ä¿ªşÿÿÿÿ8íÿœÇ1
-M	java:S106Õ"+Replace this use of System.out by a logger.(äÊáÆûÿÿÿÿ8íÿœÇ1
-H	java:S106Ú"+Replace this use of System.out by a logger.(ŒÅ‰ı8íÿœÇ1
-M	java:S106Ş"+Replace this use of System.out by a logger.(æ¶‹Üøÿÿÿÿ8îÿœÇ1
-H	java:S106ß"+Replace this use of System.out by a logger.(ğ˜§º8îÿœÇ1
-H	java:S106ã"+Replace this use of System.out by a logger.(ÚØõ¯8ïÿœÇ1
-H	java:S106î"+Replace this use of System.out by a logger.(Ÿ‚×¨8ñÿœÇ1
-H	java:S106ò"+Replace this use of System.out by a logger.(ÆÒ´8ñÿœÇ1
-H	java:S106ù"+Replace this use of System.out by a logger.(Àôœ8ñÿœÇ1
-M	java:S106ş"+Replace this use of System.out by a logger.(÷ÊÇµúÿÿÿÿ8òÿœÇ1
-M	java:S106‚"+Replace this use of System.out by a logger.(§¯ëŒùÿÿÿÿ8òÿœÇ1
-M	java:S106†"+Replace this use of System.out by a logger.(£ì¥úÿÿÿÿ8óÿœÇ1
-H	java:S106‡"+Replace this use of System.out by a logger.(“»Æ8óÿœÇ1
+java:S1192`"JDefine a constant instead of duplicating this literal "test_user" 3 times.( ü®õ8üÃŠÌÇ1
+X	java:S125,"<This block of commented-out lines of code should be removed.(á¿à§8ØÕşËÇ1
+G	java:S106:"+Replace this use of System.out by a logger.(ÚØõ¯8ÛÕşËÇ1
+L	java:S106J"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8áÕşËÇ1
+L	java:S106V"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8âÕşËÇ1
+L	java:S106]"+Replace this use of System.out by a logger.(úÆÛÀùÿÿÿÿ8ãÕşËÇ1
+L	java:S106t"+Replace this use of System.out by a logger.(Â–ÔÀùÿÿÿÿ8ãÕşËÇ1
+H	java:S106‹"+Replace this use of System.out by a logger.(¥ Êº8åÕşËÇ1
+M	java:S106¤"+Replace this use of System.out by a logger.(ÎûŒåúÿÿÿÿ8çÕşËÇ1
+H	java:S106§"+Replace this use of System.out by a logger.(»Ş“å8èÕşËÇ1
+H	java:S106¨"+Replace this use of System.out by a logger.(‡Éû®8éÕşËÇ1
+M	java:S106©"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8ëÕşËÇ1
+H	java:S106­"+Replace this use of System.out by a logger.(Š­Ğî8ìÕşËÇ1
+M	java:S106³"+Replace this use of System.out by a logger.(İüúÿÿÿÿ8íÕşËÇ1
+M	java:S106·"+Replace this use of System.out by a logger.(ÿêİ¸ûÿÿÿÿ8ïÕşËÇ1
+H	java:S106»"+Replace this use of System.out by a logger.(Ïêş8òÕşËÇ1
+M	java:S106À"+Replace this use of System.out by a logger.(í·ÇØøÿÿÿÿ8ôÕşËÇ1
+M	java:S106Ä"+Replace this use of System.out by a logger.(Åš®ïúÿÿÿÿ8õÕşËÇ1
+G	java:S106Å"+Replace this use of System.out by a logger.(íÁ²8öÕşËÇ1
+M	java:S106É"+Replace this use of System.out by a logger.(úÆÛÀùÿÿÿÿ8÷ÕşËÇ1
+M	java:S106Õ"+Replace this use of System.out by a logger.(ñÑ÷öıÿÿÿÿ8ùÕşËÇ1
+^	java:S125Ø"<This block of commented-out lines of code should be removed.(ä¿ªşÿÿÿÿ8óÕşËÇ1
+M	java:S106á"+Replace this use of System.out by a logger.(äÊáÆûÿÿÿÿ8ıÕşËÇ1
+H	java:S106æ"+Replace this use of System.out by a logger.(ŒÅ‰ı8şÕşËÇ1
+M	java:S106ê"+Replace this use of System.out by a logger.(æ¶‹Üøÿÿÿÿ8€ÖşËÇ1
+H	java:S106ë"+Replace this use of System.out by a logger.(ğ˜§º8‚ÖşËÇ1
+H	java:S106ï"+Replace this use of System.out by a logger.(ÚØõ¯8„ÖşËÇ1
+H	java:S106ú"+Replace this use of System.out by a logger.(Ÿ‚×¨8†ÖşËÇ1
+H	java:S106ş"+Replace this use of System.out by a logger.(ÆÒ´8†ÖşËÇ1
+H	java:S106…"+Replace this use of System.out by a logger.(Àôœ8¬ÅŠÌÇ1
+M	java:S106Š"+Replace this use of System.out by a logger.(÷ÊÇµúÿÿÿÿ8­ÅŠÌÇ1
+M	java:S106"+Replace this use of System.out by a logger.(§¯ëŒùÿÿÿÿ8¯ÅŠÌÇ1
+M	java:S106’"+Replace this use of System.out by a logger.(£ì¥úÿÿÿÿ8³ÅŠÌÇ1
+H	java:S106“"+Replace this use of System.out by a logger.(“»Æ8´ÅŠÌÇ1
 O
-java:S1144—"1Remove this unused private "testCategory" method.(Åõ×š8óÿœÇ1
+java:S1144£"1Remove this unused private "testCategory" method.(Åõ×š8ˆÖşËÇ1
 W
-java:S1144 "4Remove this unused private "testAdvertising" method.(šûçşøÿÿÿÿ8óÿœÇ1
+java:S1144¬"4Remove this unused private "testAdvertising" method.(šûçşøÿÿÿÿ8ˆÖşËÇ1
 R
-java:S1144¼"/Remove this unused private "testClient" method.(Ùüáüúÿÿÿÿ8óÿœÇ1
+java:S1144È"/Remove this unused private "testClient" method.(Ùüáüúÿÿÿÿ8ˆÖşËÇ1
 S
-java:S1144â"0Remove this unused private "testProgram" method.(·Îîÿÿÿÿÿ8óÿœÇ1
+java:S1144î"0Remove this unused private "testProgram" method.(·Îîÿÿÿÿÿ8‰ÖşËÇ1
