@@ -2,12 +2,8 @@ package org.vykhryst.dao.mysqlEntityDao;
 
 
 import org.vykhryst.dao.entityDao.ProgramDAO;
-import org.vykhryst.entity.Advertising;
-import org.vykhryst.entity.Category;
-import org.vykhryst.entity.Client;
-import org.vykhryst.entity.Program;
+import org.vykhryst.entity.*;
 import org.vykhryst.observer.EventNotifier;
-import org.vykhryst.observer.listeners.EntityEventListener;
 import org.vykhryst.util.DBException;
 
 import java.sql.*;
@@ -23,12 +19,12 @@ public class MySqlProgramDAO extends EventNotifier<Program> implements ProgramDA
     private static final String INSERT_PROGRAM_ADVERTISING = "INSERT INTO program_advertising (program_id, advertising_id, quantity) VALUES (?, ?, ?)";
     private static final String UPDATE_PROGRAM_QUANTITY = "UPDATE program_advertising SET quantity = ? WHERE program_id = ? AND advertising_id = ?";
     private static final String DELETE_PROGRAM_ADVERTISING = "DELETE FROM program_advertising WHERE program_id = ? AND advertising_id = ?";
-    public static final String SELECT_ALL_PROGRAMS = "SELECT p.id, c.id,c.username,c.firstname, c.lastname, c.phone_number, c.email, c.password, p.campaign_title,p.description, p.created_at\n" +
-            "FROM program p  INNER JOIN client c ON p.client_id = c.id;";
+    public static final String SELECT_ALL_PROGRAMS = "SELECT p.id, c.id, c.role, c.username,c.firstname, c.lastname, c.phone_number, c.email, c.password, p.campaign_title,p.description, p.created_at\n" +
+            "FROM program p  INNER JOIN user c ON p.client_id = c.id;";
     public static final String SELECT_PROGRAM_ADVERTISING = "SELECT a.id, c.id, c.name, a.name, a.measurement, a.unit_price, a.description, a.updated_at, pa.quantity\n" +
             "FROM program p INNER JOIN program_advertising pa ON p.id = pa.program_id INNER JOIN advertising a ON pa.advertising_id = a.id   INNER JOIN category c on a.category_id = c.id WHERE p.id = ?;";
-    public static final String SELECT_PROGRAM_BY_ID = "SELECT p.id,c.id,c.username,c.firstname,c.lastname,c.phone_number,c.email,c.password,p.campaign_title,p.description,p.created_at\n" +
-            "FROM program p INNER JOIN client c ON p.client_id = c.id WHERE p.id = ?";
+    public static final String SELECT_PROGRAM_BY_ID = "SELECT p.id, c.id, c.role, c.username, c.firstname, c.lastname, c.phone_number, c.email, c.password, p.campaign_title, p.description,p.created_at\n" +
+            "FROM program p INNER JOIN user c ON p.client_id = c.id WHERE p.id = ?";
     private final ConnectionManager connectionManager;
 
     public MySqlProgramDAO() {
@@ -55,7 +51,8 @@ public class MySqlProgramDAO extends EventNotifier<Program> implements ProgramDA
     private static Program mapProgram(ResultSet rs) throws SQLException {
         return new Program.Builder()
                 .id(rs.getInt("id"))
-                .client(new Client.Builder().id(rs.getInt("c.id"))
+                .client(new User.Builder().id(rs.getInt("c.id"))
+                        .role(Role.valueOf(rs.getString("c.role").toUpperCase()))
                         .username(rs.getString("c.username"))
                         .firstname(rs.getString("c.firstname"))
                         .lastname(rs.getString("c.lastname"))
@@ -120,7 +117,7 @@ public class MySqlProgramDAO extends EventNotifier<Program> implements ProgramDA
             conn = connectionManager.getConnection(false); // false - no auto commit
             // insert program
             st = conn.prepareStatement(INSERT_PROGRAM, Statement.RETURN_GENERATED_KEYS);
-            st.setLong(1, program.getClient().getId());
+            st.setLong(1, program.getUser().getId());
             st.setString(2, program.getCampaignTitle());
             st.setString(3, program.getDescription());
             st.executeUpdate();

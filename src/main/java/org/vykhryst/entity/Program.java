@@ -9,7 +9,7 @@ import java.util.Map;
 @Data
 public class Program {
     private long id;
-    private Client client;
+    private User user;
     private String campaignTitle;
     private String description;
     private LocalDateTime createdAt;
@@ -21,7 +21,7 @@ public class Program {
 
     public Program(Builder builder) {
         this.id = builder.id;
-        this.client = builder.client;
+        this.user = builder.user;
         this.campaignTitle = builder.campaignTitle;
         this.description = builder.description;
         this.createdAt = builder.createdAt;
@@ -39,7 +39,7 @@ public class Program {
         sb.append("Program{\n")
                 .append("id: ").append(id).append("\n")
                 .append("client: ").append("\n\t")
-                .append(client).append("\n")
+                .append(user).append("\n")
                 .append("campaignTitle: ").append(campaignTitle).append("\n")
                 .append("description: ").append(description).append("\n")
                 .append("createdAt: ").append(createdAt).append("\n")
@@ -54,7 +54,7 @@ public class Program {
 
     public static class Builder {
         private long id;
-        private Client client;
+        private User user;
         private String campaignTitle;
         private String description;
         private LocalDateTime createdAt;
@@ -66,8 +66,8 @@ public class Program {
             return this;
         }
 
-        public Builder client(Client client) {
-            this.client = client;
+        public Builder client(User user) {
+            this.user = user;
             return this;
         }
 

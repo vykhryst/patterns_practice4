@@ -8,8 +8,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Client {
+public class User {
     private long id;
+    private Role role;
     private String username;
     private String firstname;
     private String lastname;
@@ -18,10 +19,11 @@ public class Client {
     private String password;
 
     @ToString.Exclude
-    private List<ClientMemento> mementos = new ArrayList<>();
+    private List<UserMemento> mementos = new ArrayList<>();
 
-    public Client(Builder builder) {
+    public User(Builder builder) {
         this.id = builder.id;
+        this.role = builder.role;
         this.username = builder.username;
         this.firstname = builder.firstname;
         this.lastname = builder.lastname;
@@ -32,8 +34,9 @@ public class Client {
 
     @Getter
     @ToString
-    public class ClientMemento {
+    public class UserMemento {
         private long id;
+        private Role role;
         private String username;
         private String firstname;
         private String lastname;
@@ -41,24 +44,26 @@ public class Client {
         private String email;
         private String password;
 
-        public ClientMemento(Client client) {
-            this.id = client.id;
-            this.username = client.username;
-            this.firstname = client.firstname;
-            this.lastname = client.lastname;
-            this.phoneNumber = client.phoneNumber;
-            this.email = client.email;
-            this.password = client.password;
+        public UserMemento(User user) {
+            this.id = user.id;
+            this.role = user.role;
+            this.username = user.username;
+            this.firstname = user.firstname;
+            this.lastname = user.lastname;
+            this.phoneNumber = user.phoneNumber;
+            this.email = user.email;
+            this.password = user.password;
         }
 
-        public ClientMemento save() {
-            ClientMemento memento = new ClientMemento(Client.this);
+        public UserMemento save() {
+            UserMemento memento = new UserMemento(User.this);
             mementos.add(memento);
             return memento;
         }
 
-        public void restore(ClientMemento memento) {
+        public void restore(UserMemento memento) {
             this.id = memento.id;
+            this.role = memento.role;
             this.username = memento.username;
             this.firstname = memento.firstname;
             this.lastname = memento.lastname;
@@ -67,9 +72,9 @@ public class Client {
             this.password = memento.password;
         }
 
-        public ClientMemento undo() {
+        public UserMemento undo() {
             if (!mementos.isEmpty()) {
-                ClientMemento memento = mementos.remove(mementos.size() - 1);
+                UserMemento memento = mementos.remove(mementos.size() - 1);
                 restore(memento);
             } else {
                 System.out.println("Can't undo: no more mementos");
@@ -77,9 +82,10 @@ public class Client {
             return this;
         }
 
-        public static Client fromMemento(ClientMemento memento) {
-            return new Client.Builder()
+        public static User fromMemento(UserMemento memento) {
+            return new User.Builder()
                     .id(memento.id)
+                    .role(memento.role)
                     .username(memento.username)
                     .firstname(memento.firstname)
                     .lastname(memento.lastname)
@@ -93,6 +99,7 @@ public class Client {
 
     public static class Builder {
         private long id;
+        public Role role;
         private String username;
         private String firstname;
         private String lastname;
@@ -136,8 +143,13 @@ public class Client {
             return this;
         }
 
-        public Client build() {
-            return new Client(this);
+        public Builder role(Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
         }
     }
 }

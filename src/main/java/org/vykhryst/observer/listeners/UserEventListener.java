@@ -1,11 +1,11 @@
 package org.vykhryst.observer.listeners;
 
-import org.vykhryst.entity.Client;
+import org.vykhryst.entity.User;
 
-public class ClientEventListener implements EntityEventListener<Client> {
+public class UserEventListener implements EntityEventListener<User> {
 
         @Override
-        public void onEntityAdded(Client entity) {
+        public void onEntityAdded(User entity) {
             System.out.println("Client added: " + entity);
         }
 
@@ -15,7 +15,7 @@ public class ClientEventListener implements EntityEventListener<Client> {
         }
 
         @Override
-        public void onEntityUpdated(Client entity) {
+        public void onEntityUpdated(User entity) {
             System.out.println("Client updated: " + entity);
         }
 }

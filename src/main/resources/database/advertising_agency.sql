@@ -29,49 +29,50 @@ VALUES ('Media Advertising'),
        ('Internet Advertising');
 
 -- -----------------------------------------------------
--- Table `advertising_agency`.`client`
+-- Table `advertising_agency`.`user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `advertising_agency`.`client`;
+DROP TABLE IF EXISTS `advertising_agency`.`user`;
 
-CREATE TABLE IF NOT EXISTS `advertising_agency`.`client`
+CREATE TABLE IF NOT EXISTS `advertising_agency`.`user`
 (
-    `id`           INT          NOT NULL AUTO_INCREMENT,
-    `username`     VARCHAR(45)  NOT NULL,
-    `firstname`    VARCHAR(32)  NOT NULL,
-    `lastname`     VARCHAR(150) NOT NULL,
-    `phone_number` VARCHAR(10)  NOT NULL,
-    `email`        VARCHAR(255) NOT NULL,
-    `password`     VARCHAR(255) NOT NULL,
+    `id`           INT                    NOT NULL AUTO_INCREMENT,
+    `role`         ENUM ('ADMIN', 'USER') NOT NULL DEFAULT 'USER',
+    `username`     VARCHAR(45)            NOT NULL,
+    `firstname`    VARCHAR(32)            NOT NULL,
+    `lastname`     VARCHAR(150)           NOT NULL,
+    `phone_number` VARCHAR(10)            NOT NULL,
+    `email`        VARCHAR(255)           NOT NULL,
+    `password`     VARCHAR(255)           NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `phone_number_UNIQUE` (`phone_number` ASC) VISIBLE
 );
 
-INSERT INTO `client` (`username`, `firstname`, `lastname`, `phone_number`, `email`, `password`)
-VALUES ('client1', 'John', 'Doe', '1234567890', 'john.doe@example.com', 'password1'),
-       ('client2', 'Jane', 'Smith', '9876543210', 'jane.smith@example.com', 'password2'),
-       ('client3', 'Alice', 'Johnson', '5551112233', 'alice.johnson@example.com', 'password3'),
-       ('client4', 'Bob', 'Williams', '1112223344', 'bob.williams@example.com', 'password4'),
-       ('client5', 'Bob', 'Jones', '1133567890', 'bob.jones@gmail.com', 'password5'),
-       ('client6', 'Jane', 'Miller', '9996543210', 'miller@example.com', 'password6'),
-       ('client7', 'David', 'Brown', '2223334455', 'david.brown@example.com', 'password7'),
-       ('client8', 'Emily', 'Davis', '3334445566', 'emily.davis@example.com', 'password8'),
-       ('client9', 'George', 'Smith', '4445556677', 'george.smith@example.com', 'password9'),
-       ('client10', 'Hannah', 'Taylor', '5556667788', 'hannah.taylor@example.com', 'password10'),
-       ('client11', 'Isaac', 'Lee', '6667778899', 'isaac.lee@example.com', 'password11'),
-       ('client12', 'Julia', 'Clark', '7778889900', 'julia.clark@example.com', 'password12'),
-       ('client13', 'Kevin', 'Wong', '8889990011', 'kevin.wong@example.com', 'password13'),
-       ('client14', 'Linda', 'Nguyen', '9990001122', 'linda.nguyen@example.com', 'password14'),
-       ('client15', 'Michael', 'Johnson', '1112223334', 'michael.johnson@example.com', 'password15'),
-       ('client16', 'Nancy', 'Chen', '2223334445', 'nancy.chen@example.com', 'password16'),
-       ('client17', 'Oscar', 'Garcia', '3334445556', 'oscar.garcia@example.com', 'password17'),
-       ('client18', 'Paul', 'Kim', '4445556667', 'paul.kim@example.com', 'password18'),
-       ('client19', 'Quincy', 'Lee', '5556667778', 'quincy.lee@example.com', 'password19'),
-       ('client20', 'Rachel', 'Smith', '6667778889', 'rachel.smith@example.com', 'password20'),
-       ('client21', 'Samuel', 'Williams', '7778889990', 'samuel.williams@example.com', 'password21'),
-       ('client22', 'Tina', 'Miller', '8889990001', 'tina.miller@example.com', 'password22'),
-       ('client23', 'Ulysses', 'Jones', '9990001112', 'ulysses.jones@example.com', 'password23'),
-       ('client24', 'Victoria', 'Brown', '1112223333', 'victoria.brown@example.com', 'password24'),
-       ('client25', 'Walter', 'Davis', '2223334444', 'walter.davis@example.com', 'password25');
+INSERT INTO `user` (`role`, `username`, `firstname`, `lastname`, `phone_number`, `email`, `password`)
+VALUES ('USER', 'client1', 'John', 'Doe', '1234567890', 'john.doe@example.com', 'password1'),
+       ('ADMIN', 'admin2', 'Jane', 'Smith', '9876543210', 'jane.smith@example.com', 'password2'),
+       ('USER', 'client3', 'Alice', 'Johnson', '5551112233', 'alice.johnson@example.com', 'password3'),
+       ('ADMIN', 'admin4', 'Bob', 'Williams', '1112223344', 'bob.williams@example.com', 'password4'),
+       ('USER', 'client5', 'Bob', 'Jones', '1133567890', 'bob.jones@gmail.com', 'password5'),
+       ('ADMIN', 'admin6', 'Jane', 'Miller', '9996543210', 'miller@example.com', 'password6'),
+       ('USER', 'client7', 'David', 'Brown', '2223334455', 'david.brown@example.com', 'password7'),
+       ('ADMIN', 'admin8', 'Emily', 'Davis', '3334445566', 'emily.davis@example.com', 'password8'),
+       ('USER', 'client9', 'George', 'Smith', '4445556677', 'george.smith@example.com', 'password9'),
+       ('ADMIN', 'admin10', 'Hannah', 'Taylor', '5556667788', 'hannah.taylor@example.com', 'password10'),
+       ('USER', 'client11', 'Isaac', 'Lee', '6667778899', 'isaac.lee@example.com', 'password11'),
+       ('ADMIN', 'admin12', 'Julia', 'Clark', '7778889900', 'julia.clark@example.com', 'password12'),
+       ('USER', 'client13', 'Kevin', 'Wong', '8889990011', 'kevin.wong@example.com', 'password13'),
+       ('ADMIN', 'admin14', 'Linda', 'Nguyen', '9990001122', 'linda.nguyen@example.com', 'password14'),
+       ('USER', 'client15', 'Michael', 'Johnson', '1112223334', 'michael.johnson@example.com', 'password15'),
+       ('USER', 'client16', 'Nancy', 'Chen', '2223334445', 'nancy.chen@example.com', 'password16'),
+       ('USER', 'client17', 'Oscar', 'Garcia', '3334445556', 'oscar.garcia@example.com', 'password17'),
+       ('USER', 'client18', 'Paul', 'Kim', '4445556667', 'paul.kim@example.com', 'password18'),
+       ('USER', 'client19', 'Quincy', 'Lee', '5556667778', 'quincy.lee@example.com', 'password19'),
+       ('USER', 'client20', 'Rachel', 'Smith', '6667778889', 'rachel.smith@example.com', 'password20'),
+       ('USER', 'client21', 'Samuel', 'Williams', '7778889990', 'samuel.williams@example.com', 'password21'),
+       ('USER', 'client22', 'Tina', 'Miller', '8889990001', 'tina.miller@example.com', 'password22'),
+       ('USER', 'client23', 'Ulysses', 'Jones', '9990001112', 'ulysses.jones@example.com', 'password23'),
+       ('USER', 'client24', 'Victoria', 'Brown', '1112223333', 'victoria.brown@example.com', 'password24'),
+       ('USER', 'client25', 'Walter', 'Davis', '2223334444', 'walter.davis@example.com', 'password25');
 
 
 -- -----------------------------------------------------
@@ -140,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `advertising_agency`.`program`
     INDEX `fk_program_client_idx` (`client_id` ASC) VISIBLE,
     CONSTRAINT `fk_program_client`
         FOREIGN KEY (`client_id`)
-            REFERENCES `advertising_agency`.`client` (`id`)
+            REFERENCES `advertising_agency`.`user` (`id`)
             ON DELETE CASCADE
             ON UPDATE RESTRICT
 );
